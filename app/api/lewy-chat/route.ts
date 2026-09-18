@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 
 // This route runs only on the server, so GEMINI_API_KEY is never exposed to the browser.
-const GEMINI_MODEL = "gemini-2.5-flash";
+// Gemini 3 uses the newer Interactions API (different endpoint + request/response shape
+// from the older generateContent API). See https://ai.google.dev/gemini-api/docs/gemini-3
+const GEMINI_MODEL = "gemini-3-flash-preview";
 
 export async function POST(req: Request) {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -48,34 +50,44 @@ Rules:
 - Never invent prices, policies, or facts that are not listed above.`;
 
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
-        },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemPrompt }] },
-          contents: [{ role: "user", parts: [{ text: message }] }],
-        }),
-      }
-    );
+    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey,
+      },
+      body: JSON.stringify({
+        model: GEMINI_MODEL,
+        system_instruction: systemPrompt,
+        input: message,
+        generation_config: { thinking_level: "low" }, // fast, chat-style replies
+      }),
+    });
 
     if (!res.ok) {
       const errText = await res.text();
       console.error("Gemini API error:", res.status, errText);
       return NextResponse.json(
-        { error: `Gemini API error (${res.status}). Check GEMINI_API_KEY and model access.` },
+        { error: `Gemini API error (${res.status}). Check GEMINI_API_KEY and that ${GEMINI_MODEL} is enabled for this key.` },
         { status: 502 }
       );
     }
 
     const data = await res.json();
-    const reply: string | undefined = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    // The Interactions API returns a `steps` array; the reply text lives in the
+    // last "model_output" step's content. (SDKs expose this as `interaction.output_text`,
+    // but that convenience field isn't present in raw REST responses.)
+    const modelOutputStep = [...(data.steps ?? [])]
+      .reverse()
+      .find((s: { type?: string }) => s.type === "model_output");
+
+    const reply: string | undefined = modelOutputStep?.content?.find(
+      (c: { type?: string }) => c.type === "text"
+    )?.text;
 
     if (!reply) {
+      console.error("Unexpected Gemini response shape:", JSON.stringify(data));
       return NextResponse.json(
         { error: "Gemini returned no usable reply." },
         { status: 502 }
