@@ -10,7 +10,7 @@ export default function StatCard({
   tone?: "default" | "positive" | "warning";
 }) {
   const toneColor =
-    tone === "positive" ? "text-cyan" : tone === "warning" ? "text-amber" : "text-text";
+    tone === "positive" ? "text-teal" : tone === "warning" ? "text-copper" : "text-text";
 
   return (
     <div className="rounded-2xl border border-border bg-surface p-5">

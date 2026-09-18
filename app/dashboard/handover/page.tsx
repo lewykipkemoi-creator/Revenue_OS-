@@ -26,7 +26,7 @@ export default function HandoverPage() {
               <p className="mt-1 text-sm text-danger">{c.reason}</p>
               <p className="mt-1 text-xs text-muted">{c.channel} · flagged {c.since}</p>
             </div>
-            <div className="text-sm font-medium text-amber">{c.value} opportunity</div>
+            <div className="text-sm font-medium text-copper">{c.value} opportunity</div>
           </Link>
         ))}
 

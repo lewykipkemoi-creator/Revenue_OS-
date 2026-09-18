@@ -24,7 +24,7 @@ export default function CalendarPage() {
               <p className="font-medium">{a.customer}</p>
               <p className="mt-1 text-xs text-muted">{a.type}</p>
             </div>
-            <p className="text-sm text-cyan">{a.time}</p>
+            <p className="text-sm text-teal">{a.time}</p>
           </div>
         ))}
       </div>

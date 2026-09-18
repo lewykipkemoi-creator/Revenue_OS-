@@ -89,7 +89,7 @@ function AuthForm() {
         <button
           type="submit"
           disabled={loading}
-          className="focus-ring w-full rounded-full bg-gradient-to-r from-violet via-cyan to-amber py-3 text-sm font-medium text-ink transition-opacity hover:opacity-90 disabled:opacity-50"
+          className="focus-ring w-full rounded-full bg-gold py-3 text-sm font-medium text-ink transition-colors hover:bg-goldDeep disabled:opacity-50"
         >
           {loading ? "One moment…" : mode === "signup" ? "Create account" : "Log in"}
         </button>
@@ -110,13 +110,8 @@ export default function AuthPage() {
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
       <div
         aria-hidden
-        className="pointer-events-none absolute top-0 left-0 h-[480px] w-[480px] rounded-full opacity-20 blur-[120px]"
-        style={{ background: "radial-gradient(circle, #7C5CFF, transparent 70%)" }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full opacity-20 blur-[120px]"
-        style={{ background: "radial-gradient(circle, #FFB86B, transparent 70%)" }}
+        className="pointer-events-none absolute top-0 left-0 h-[480px] w-[480px] rounded-full opacity-[0.12] blur-[130px]"
+        style={{ background: "radial-gradient(circle, #E8A63D, transparent 70%)" }}
       />
       <Suspense fallback={null}>
         <AuthForm />

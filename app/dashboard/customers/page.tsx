@@ -26,7 +26,7 @@ export default function CustomersPage() {
               <tr key={c.name} className="border-b border-border last:border-0">
                 <td className="px-4 py-3 font-medium">{c.name}</td>
                 <td className="px-4 py-3 text-muted">{c.channels}</td>
-                <td className="px-4 py-3 text-amber">{c.revenue}</td>
+                <td className="px-4 py-3 text-copper">{c.revenue}</td>
                 <td className="px-4 py-3 text-muted">{c.last}</td>
               </tr>
             ))}

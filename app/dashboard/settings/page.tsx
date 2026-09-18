@@ -17,7 +17,7 @@ export default function SettingsPage() {
         {sections.map((s) => (
           <button
             key={s.title}
-            className="focus-ring rounded-2xl border border-border bg-surface p-5 text-left transition-colors hover:border-cyan/40"
+            className="focus-ring rounded-2xl border border-border bg-surface p-5 text-left transition-colors hover:border-teal/40"
           >
             <p className="font-medium">{s.title}</p>
             <p className="mt-1 text-sm text-muted">{s.desc}</p>

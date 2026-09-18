@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0A0E14;
-  --surface: #131922;
-  --surface2: #1A2128;
-  --border: #232B36;
-  --text: #E8ECF1;
-  --muted: #8891A3;
+  --bg: #15101F;
+  --surface: #1F1830;
+  --surface2: #2A2140;
+  --border: #3A2F52;
+  --text: #F6F1E7;
+  --muted: #A296C4;
 }
 
 [data-theme="light"] {
-  --bg: #F6F5F2;
+  --bg: #FBF7EF;
   --surface: #FFFFFF;
-  --surface2: #EFEDE8;
-  --border: #E2DFD8;
-  --text: #14181F;
-  --muted: #5B6270;
+  --surface2: #F3EBDC;
+  --border: #E6D9C0;
+  --text: #221A33;
+  --muted: #6B5F87;
 }
 
 * {
@@ -35,7 +35,7 @@ body {
 }
 
 ::selection {
-  background: #7C5CFF44;
+  background: #E8A63D44;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -49,24 +49,23 @@ body {
 }
 
 .focus-ring:focus-visible {
-  outline: 2px solid #2DD9C6;
+  outline: 2px solid #2FBF9E;
   outline-offset: 2px;
 }
 
-/* Lewy pulse — the one orchestrated motion moment on the homepage */
+/* Lewy breathe — the one orchestrated motion moment on the homepage */
 @keyframes lewy-breathe {
-  0%, 100% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.04); opacity: 1; }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 .lewy-breathe {
   animation: lewy-breathe 4.5s ease-in-out infinite;
 }
 
-@keyframes pipeline-flow {
-  0% { stroke-dashoffset: 400; }
-  100% { stroke-dashoffset: 0; }
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.pipeline-flow {
-  stroke-dasharray: 8 6;
-  animation: pipeline-flow 12s linear infinite;
+.reveal-up {
+  animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

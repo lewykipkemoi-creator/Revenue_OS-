@@ -19,7 +19,7 @@ export default function ChannelsPage() {
           <div key={c.name} className="flex items-center justify-between rounded-2xl border border-border bg-surface p-5">
             <div>
               <p className="font-medium">{c.name}</p>
-              <p className={`mt-1 text-xs ${c.status === "Connected" ? "text-cyan" : "text-amber"}`}>{c.status}</p>
+              <p className={`mt-1 text-xs ${c.status === "Connected" ? "text-teal" : "text-copper"}`}>{c.status}</p>
             </div>
             <button className="focus-ring rounded-full border border-border px-3 py-1.5 text-xs text-muted hover:text-text">
               {c.status === "Connected" ? "Manage" : "Reconnect"}

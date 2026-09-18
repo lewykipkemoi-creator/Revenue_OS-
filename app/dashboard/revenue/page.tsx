@@ -49,8 +49,8 @@ export default function RevenuePage() {
                   <p className="text-xs text-muted">{t.product}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-amber">{t.amount}</p>
-                  <p className={`text-xs ${t.status === "Paid" ? "text-cyan" : "text-danger"}`}>{t.status}</p>
+                  <p className="text-copper">{t.amount}</p>
+                  <p className={`text-xs ${t.status === "Paid" ? "text-teal" : "text-danger"}`}>{t.status}</p>
                 </div>
               </div>
             ))}

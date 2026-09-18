@@ -34,9 +34,9 @@ export default function ConversationsPage() {
                 <td className="px-4 py-3 text-muted">{c.channel}</td>
                 <td className="max-w-[260px] truncate px-4 py-3 text-muted">{c.preview}</td>
                 <td className="px-4 py-3">
-                  <span className={c.flagged ? "font-medium text-danger" : "text-cyan"}>{c.status}</span>
+                  <span className={c.flagged ? "font-medium text-danger" : "text-teal"}>{c.status}</span>
                 </td>
-                <td className="px-4 py-3 text-amber">{c.value}</td>
+                <td className="px-4 py-3 text-copper">{c.value}</td>
               </tr>
             ))}
           </tbody>

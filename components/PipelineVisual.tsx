@@ -1,55 +1,45 @@
 export default function PipelineVisual() {
   return (
-    <div className="relative mx-auto flex w-full max-w-md items-center justify-center">
-      <div
-        aria-hidden
-        className="lewy-breathe absolute h-64 w-64 rounded-full opacity-30 blur-3xl"
-        style={{ background: "conic-gradient(from 90deg, #7C5CFF, #2DD9C6, #FFB86B, #7C5CFF)" }}
-      />
-      <svg viewBox="0 0 420 460" className="relative w-full max-w-sm" role="img" aria-label="A customer message flowing through Lewy into confirmed revenue">
+    <div className="relative mx-auto w-full max-w-sm reveal-up">
+      <svg viewBox="0 0 340 460" className="w-full" role="img" aria-label="A phone showing a WhatsApp-style chat turning into a confirmed sale">
         <defs>
-          <linearGradient id="pipeGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#7C5CFF" />
-            <stop offset="55%" stopColor="#2DD9C6" />
-            <stop offset="100%" stopColor="#FFB86B" />
+          <linearGradient id="phoneBg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#241B38" />
+            <stop offset="100%" stopColor="#1A1329" />
           </linearGradient>
         </defs>
 
-        {/* connecting spine */}
-        <path
-          d="M210 90 C 210 150, 210 150, 210 210 C 210 270, 210 270, 210 330"
-          stroke="url(#pipeGrad)"
-          strokeWidth="2"
-          fill="none"
-          opacity="0.5"
-          className="pipeline-flow"
-        />
+        {/* phone body */}
+        <rect x="20" y="10" width="300" height="440" rx="34" fill="#0F0A18" />
+        <rect x="30" y="24" width="280" height="412" rx="24" fill="url(#phoneBg)" />
 
-        {/* incoming message bubble */}
-        <g>
-          <rect x="90" y="40" width="130" height="46" rx="16" fill="#131922" stroke="#232B36" />
-          <circle cx="112" cy="63" r="4" fill="#7C5CFF" />
-          <rect x="126" y="55" width="80" height="6" rx="3" fill="#232B36" />
-          <rect x="126" y="67" width="56" height="6" rx="3" fill="#232B36" />
-        </g>
+        {/* chat header */}
+        <circle cx="56" cy="52" r="14" fill="#3A2F52" />
+        <rect x="76" y="45" width="90" height="7" rx="3.5" fill="#4A3D66" />
+        <rect x="76" y="57" width="56" height="6" rx="3" fill="#3A2F52" />
 
-        {/* Lewy node */}
-        <circle cx="210" cy="210" r="34" fill="#131922" stroke="#2DD9C6" strokeWidth="1.5" />
-        <circle cx="210" cy="210" r="10" fill="#2DD9C6" />
-        <text x="210" y="264" textAnchor="middle" className="fill-muted" style={{ fontSize: "11px" }}>
-          qualified &amp; routed
-        </text>
+        {/* incoming message */}
+        <rect x="46" y="86" width="180" height="52" rx="16" fill="#2A2140" />
+        <rect x="60" y="100" width="140" height="7" rx="3.5" fill="#4A3D66" />
+        <rect x="60" y="114" width="96" height="7" rx="3.5" fill="#4A3D66" />
 
-        {/* revenue card */}
-        <g>
-          <rect x="120" y="330" width="180" height="70" rx="18" fill="#131922" stroke="#FFB86B" strokeOpacity="0.4" />
-          <text x="145" y="358" className="fill-current" style={{ fontSize: "11px", fill: "#8891A3" }}>
-            Revenue recovered
-          </text>
-          <text x="145" y="382" style={{ fontSize: "20px", fontWeight: 600, fill: "#FFB86B" }}>
-            KES 48,200
-          </text>
-        </g>
+        {/* Lewy's reply bubble, gold-tinted to show it's the AI's confident answer */}
+        <rect x="94" y="150" width="180" height="66" rx="16" fill="#3A2F1E" stroke="#E8A63D" strokeOpacity="0.5" />
+        <rect x="108" y="164" width="120" height="7" rx="3.5" fill="#E8A63D" opacity="0.85" />
+        <rect x="108" y="178" width="150" height="7" rx="3.5" fill="#E8A63D" opacity="0.6" />
+        <rect x="108" y="192" width="90" height="7" rx="3.5" fill="#E8A63D" opacity="0.6" />
+
+        {/* divider */}
+        <line x1="46" y1="242" x2="274" y2="242" stroke="#3A2F52" strokeDasharray="3 5" />
+
+        {/* receipt card — the moment of revenue */}
+        <rect x="46" y="264" width="228" height="150" rx="18" fill="#1A1329" stroke="#3A2F52" />
+        <rect x="66" y="284" width="90" height="8" rx="4" fill="#A296C4" />
+        <rect x="66" y="304" width="130" height="7" rx="3.5" fill="#3A2F52" />
+        <rect x="66" y="318" width="100" height="7" rx="3.5" fill="#3A2F52" />
+        <line x1="66" y1="340" x2="254" y2="340" stroke="#3A2F52" />
+        <text x="66" y="368" style={{ fontSize: "13px", fill: "#A296C4" }}>Order confirmed</text>
+        <text x="66" y="394" style={{ fontSize: "22px", fontWeight: 600, fill: "#C6712F" }}>KES 2,400</text>
       </svg>
     </div>
   );

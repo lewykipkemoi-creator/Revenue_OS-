@@ -133,7 +133,7 @@ export default function Onboarding() {
     <main className="min-h-screen bg-ink px-6 py-10 md:px-0">
       <div className="mx-auto h-1 w-full max-w-lg overflow-hidden rounded-full bg-surface2">
         <div
-          className="h-full bg-gradient-to-r from-violet via-cyan to-amber transition-all duration-500"
+          className="h-full bg-gold transition-all duration-500"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -188,7 +188,7 @@ export default function Onboarding() {
                   onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).value && setLocationName((e.target as HTMLInputElement).value)}
                 />
                 <p className="mt-2 text-xs text-muted">Press Enter to continue. Address is optional and can be added later in Settings.</p>
-                <button className="focus-ring mt-4 text-sm text-cyan" onClick={() => setLocationName("Not specified yet")}>
+                <button className="focus-ring mt-4 text-sm text-teal" onClick={() => setLocationName("Not specified yet")}>
                   Skip for now →
                 </button>
               </QuestionBlock>
@@ -227,7 +227,7 @@ export default function Onboarding() {
                     {qIndex + 1} of {KNOWLEDGE_QUESTIONS.length} · Press Enter to continue
                   </p>
                   <button
-                    className="focus-ring text-xs text-cyan"
+                    className="focus-ring text-xs text-teal"
                     onClick={() => setQIndex((i) => i + 1)}
                   >
                     Skip →
@@ -261,7 +261,7 @@ export default function Onboarding() {
                 <div key={i} className={`flex ${m.role === "customer" ? "justify-end" : "justify-start"}`}>
                   <div
                     className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm ${
-                      m.role === "customer" ? "bg-surface2 text-text" : "bg-violet/15 text-text"
+                      m.role === "customer" ? "bg-surface2 text-text" : "bg-gold/15 text-text"
                     }`}
                   >
                     {m.text}
@@ -270,7 +270,7 @@ export default function Onboarding() {
               ))}
               {testLoading && (
                 <div className="flex justify-start">
-                  <div className="max-w-[75%] rounded-2xl bg-violet/15 px-4 py-2 text-sm text-muted">
+                  <div className="max-w-[75%] rounded-2xl bg-gold/15 px-4 py-2 text-sm text-muted">
                     Lewy is typing…
                   </div>
                 </div>
@@ -316,7 +316,7 @@ export default function Onboarding() {
                 <button
                   key={ch}
                   onClick={() => setStep("terms")}
-                  className="focus-ring rounded-xl border border-border bg-surface px-4 py-3 text-left text-sm hover:border-cyan/60"
+                  className="focus-ring rounded-xl border border-border bg-surface px-4 py-3 text-left text-sm hover:border-teal/60"
                 >
                   {ch}
                 </button>
@@ -339,7 +339,7 @@ export default function Onboarding() {
             </div>
             <button
               onClick={() => setStep("done")}
-              className="focus-ring mt-6 rounded-full bg-gradient-to-r from-violet via-cyan to-amber px-6 py-3 text-sm font-medium text-ink"
+              className="focus-ring mt-6 rounded-full bg-gold px-6 py-3 text-sm font-medium text-ink transition-colors hover:bg-goldDeep"
             >
               I accept — activate Lewy
             </button>
@@ -396,7 +396,7 @@ function OptionGrid({ options, onSelect }: { options: string[]; onSelect: (v: st
         <button
           key={opt}
           onClick={() => onSelect(opt)}
-          className="focus-ring rounded-xl border border-border bg-surface px-4 py-3 text-left text-sm hover:border-cyan/60"
+          className="focus-ring rounded-xl border border-border bg-surface px-4 py-3 text-left text-sm hover:border-teal/60"
         >
           {opt}
         </button>

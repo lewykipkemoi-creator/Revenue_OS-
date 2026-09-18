@@ -25,7 +25,7 @@ export default function LeadsPage() {
                   <div key={l.customer} className="rounded-xl border border-border bg-surface2 p-3 text-sm">
                     <p className="font-medium">{l.customer}</p>
                     <p className="mt-1 text-xs text-muted">{l.product}</p>
-                    <p className="mt-2 text-xs text-amber">{l.value}</p>
+                    <p className="mt-2 text-xs text-copper">{l.value}</p>
                   </div>
                 ))}
             </div>

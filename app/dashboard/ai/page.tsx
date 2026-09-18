@@ -24,7 +24,7 @@ export default function AIControlsPage() {
               <div key={t.label} className="flex items-center justify-between text-sm">
                 <span>{t.label}</span>
                 <span
-                  className={`h-6 w-11 rounded-full p-0.5 transition-colors ${t.on ? "bg-cyan/40" : "bg-surface2"}`}
+                  className={`h-6 w-11 rounded-full p-0.5 transition-colors ${t.on ? "bg-teal/40" : "bg-surface2"}`}
                 >
                   <span
                     className={`block h-5 w-5 rounded-full bg-text transition-transform ${t.on ? "translate-x-5" : ""}`}
@@ -45,7 +45,7 @@ export default function AIControlsPage() {
               </li>
             ))}
           </ul>
-          <button className="focus-ring mt-4 text-sm text-cyan">+ Add escalation category</button>
+          <button className="focus-ring mt-4 text-sm text-teal">+ Add escalation category</button>
         </div>
       </div>
     </div>

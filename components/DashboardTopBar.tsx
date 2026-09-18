@@ -30,7 +30,7 @@ export default function DashboardTopBar({
             aria-pressed={active}
           >
             <span
-              className={`h-2 w-2 rounded-full ${active ? "bg-cyan" : "bg-muted"}`}
+              className={`h-2 w-2 rounded-full ${active ? "bg-teal" : "bg-muted"}`}
               aria-hidden
             />
             Lewy is {active ? "active" : "deactivated"}

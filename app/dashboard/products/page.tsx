@@ -40,7 +40,7 @@ export default function ProductsPage() {
             {products.map((p) => (
               <tr key={p.sku} className="border-b border-border last:border-0">
                 <td className="px-4 py-3 font-medium">{p.name}</td>
-                <td className="px-4 py-3 text-amber">{p.price}</td>
+                <td className="px-4 py-3 text-copper">{p.price}</td>
                 <td className="px-4 py-3 text-muted">{p.sku}</td>
               </tr>
             ))}
@@ -54,7 +54,7 @@ export default function ProductsPage() {
           const Icon = m.type === "pdf" ? FileText : m.type === "video" ? Video : ImageIcon;
           return (
             <div key={m.name} className="flex items-center gap-3 rounded-xl border border-border bg-surface p-4">
-              <Icon size={18} className="shrink-0 text-cyan" />
+              <Icon size={18} className="shrink-0 text-teal" />
               <span className="truncate text-sm">{m.name}</span>
             </div>
           );
