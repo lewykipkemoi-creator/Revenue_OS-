@@ -79,15 +79,24 @@ export default function Onboarding() {
     }
   }
 
+  const [saveError, setSaveError] = useState<string | null>(null);
+
   async function finishOnboarding() {
     setSaving(true);
+    setSaveError(null);
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
 
-    if (user) {
-      await supabase.from("workspaces").upsert(
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        throw new Error(userError?.message || "No logged-in user found.");
+      }
+
+      const { error: upsertError } = await supabase.from("workspaces").upsert(
         {
           owner_id: user.id,
           business_type: businessType,
@@ -101,11 +110,23 @@ export default function Onboarding() {
         },
         { onConflict: "owner_id" }
       );
-    }
 
-    setSaving(false);
-    router.push("/dashboard");
-    router.refresh();
+      if (upsertError) {
+        throw new Error(upsertError.message);
+      }
+
+      router.push("/dashboard");
+      router.refresh();
+    } catch (err) {
+      console.error("Onboarding save failed:", err);
+      setSaveError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong saving your setup. Please try again."
+      );
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -349,6 +370,9 @@ export default function Onboarding() {
                 Skip for now
               </button>
             </div>
+            {saveError && (
+              <p className="mx-auto mt-4 max-w-sm text-sm text-danger">⚠️ {saveError}</p>
+            )}
           </div>
         )}
       </div>
