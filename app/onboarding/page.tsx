@@ -36,27 +36,47 @@ export default function Onboarding() {
     { role: "lewy", text: "Hey! I'm ready — send me a message like a real customer would." },
   ]);
   const [testInput, setTestInput] = useState("");
+  const [testLoading, setTestLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const stepIndex = STEPS.indexOf(step);
   const progress = ((stepIndex + 1) / STEPS.length) * 100;
 
-  function sendTestMessage() {
-    if (!testInput.trim()) return;
+  async function sendTestMessage() {
+    if (!testInput.trim() || testLoading) return;
     const customerMsg = testInput.trim();
     setTestMessages((m) => [...m, { role: "customer", text: customerMsg }]);
     setTestInput("");
-    setTimeout(() => {
+    setTestLoading(true);
+
+    try {
+      const res = await fetch("/api/lewy-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: customerMsg,
+          business: { businessType, voice, description, answers },
+        }),
+      });
+      const data = await res.json();
+
       setTestMessages((m) => [
         ...m,
         {
           role: "lewy",
-          text:
-            answers.greeting?.trim() ||
-            "Thanks for the message! Based on what you told me about the business, here's how I'd reply — you can correct me any time.",
+          text: res.ok
+            ? data.reply
+            : `⚠️ ${data.error || "Lewy couldn't reply just now."}`,
         },
       ]);
-    }, 500);
+    } catch {
+      setTestMessages((m) => [
+        ...m,
+        { role: "lewy", text: "⚠️ Couldn't reach Lewy's brain — check your connection and try again." },
+      ]);
+    } finally {
+      setTestLoading(false);
+    }
   }
 
   async function finishOnboarding() {
@@ -227,6 +247,13 @@ export default function Onboarding() {
                   </div>
                 </div>
               ))}
+              {testLoading && (
+                <div className="flex justify-start">
+                  <div className="max-w-[75%] rounded-2xl bg-violet/15 px-4 py-2 text-sm text-muted">
+                    Lewy is typing…
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="mt-3 flex gap-2">
@@ -235,9 +262,14 @@ export default function Onboarding() {
                 onChange={(e) => setTestInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendTestMessage()}
                 placeholder="Type as a customer would…"
-                className="focus-ring flex-1 rounded-xl border border-border bg-surface px-4 py-3 text-sm outline-none"
+                disabled={testLoading}
+                className="focus-ring flex-1 rounded-xl border border-border bg-surface px-4 py-3 text-sm outline-none disabled:opacity-60"
               />
-              <button onClick={sendTestMessage} className="focus-ring rounded-xl bg-surface2 px-4 text-sm">
+              <button
+                onClick={sendTestMessage}
+                disabled={testLoading}
+                className="focus-ring rounded-xl bg-surface2 px-4 text-sm disabled:opacity-60"
+              >
                 Send
               </button>
             </div>
