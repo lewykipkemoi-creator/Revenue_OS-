@@ -16,26 +16,87 @@ function AuthForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  function looksLikeExistingAccount(message: string) {
+    const m = message.toLowerCase();
+    return m.includes("already registered") || m.includes("already exists") || m.includes("user_already_exists");
+  }
+
+  function looksLikeInvalidCredentials(message: string) {
+    const m = message.toLowerCase();
+    return m.includes("invalid login credentials") || m.includes("invalid_credentials");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setLoading(true);
     const supabase = createClient();
 
-    const { error: authError } =
-      mode === "signup"
-        ? await supabase.auth.signUp({ email, password })
-        : await supabase.auth.signInWithPassword({ email, password });
+    if (mode === "signup") {
+      const { error: signUpError } = await supabase.auth.signUp({ email, password });
 
-    setLoading(false);
+      if (!signUpError) {
+        setLoading(false);
+        router.push("/onboarding");
+        router.refresh();
+        return;
+      }
 
-    if (authError) {
-      setError(authError.message);
+      if (looksLikeExistingAccount(signUpError.message)) {
+        const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+        setLoading(false);
+
+        if (!loginError) {
+          router.push("/dashboard");
+          router.refresh();
+          return;
+        }
+
+        setMode("login");
+        setError(
+          looksLikeInvalidCredentials(loginError.message)
+            ? "You already have an account with this email — that password doesn't match it. Try again."
+            : loginError.message
+        );
+        return;
+      }
+
+      setLoading(false);
+      setError(signUpError.message);
       return;
     }
 
-    router.push(mode === "signup" ? "/onboarding" : "/dashboard");
-    router.refresh();
+    const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (!loginError) {
+      setLoading(false);
+      router.push("/dashboard");
+      router.refresh();
+      return;
+    }
+
+    if (looksLikeInvalidCredentials(loginError.message)) {
+      const { error: signUpError } = await supabase.auth.signUp({ email, password });
+      setLoading(false);
+
+      if (!signUpError) {
+        setMode("signup");
+        router.push("/onboarding");
+        router.refresh();
+        return;
+      }
+
+      if (looksLikeExistingAccount(signUpError.message)) {
+        setError("Incorrect password for this account.");
+        return;
+      }
+
+      setError(signUpError.message);
+      return;
+    }
+
+    setLoading(false);
+    setError(loginError.message);
   }
 
   return (
